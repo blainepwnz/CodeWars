@@ -33,7 +33,12 @@ public class ExampleInterpreterTest {
         assertEquals(1, interpreter.input("x = 1"), 0.0);
         assertEquals(1, interpreter.input("x"), 0.0);
         assertEquals(4, interpreter.input("x + 3"), 0.0);
-//        assertFail("input: 'y'", () -> interpreter.input("y"));
+
+        // Functions
+        interpreter.input("fn avg x y => (x + y) / 2");
+        assertEquals(3, interpreter.input("avg 4 2"), 0.0);
+        assertFail("input: 'avg 7'", () -> interpreter.input("avg 7"));
+        assertFail("input: 'avg 7 2 4'", () -> interpreter.input("avg 7 2 4"));
     }
 
     private static void assertFail(String msg, Runnable runnable) {
