@@ -3,6 +3,7 @@ package codewars.kyu2;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -32,6 +33,12 @@ public class Interpreter {
             return result;
         } else if (isInParenthesis(expression)) {
             return calculateInRecursion(expression.substring(1, expression.length() - 1));
+        } else if(expression.contains("=")){
+            Matcher nearbyParenthesisMatcher = getNearbyParenthesis(expression);
+            nearbyParenthesisMatcher.find();
+            int startingIndex = nearbyParenthesisMatcher.start();
+            int endingIndex = nearbyParenthesisMatcher.end();
+            return calculateInRecursion(expression.substring(0,startingIndex)+calculateInRecursion(expression.substring(startingIndex,endingIndex))+expression.substring(endingIndex));
         } else {
             for (Character character : variableValueMap.keySet()) {
                 expression = expression.replaceAll(String.valueOf(character), variableValueMap.get(character));
@@ -68,6 +75,10 @@ public class Interpreter {
 
     private boolean isInvalid(String input) {
         return Pattern.compile("[\\d\\_]+ [\\d\\_]+").matcher(input).find();
+    }
+
+    private Matcher getNearbyParenthesis(String input) {
+        return Pattern.compile("[\\(]{1}[^(]+[\\)]{1}").matcher(input);
     }
 
 }

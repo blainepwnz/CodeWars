@@ -14,6 +14,7 @@ public class ExampleInterpreterTest {
         Interpreter interpreter = new Interpreter();
 
         // Basic arithmetic
+        assertEquals( 16, interpreter.input("x = 13 + (y = 3)"), 0.0);
         assertEquals(2, interpreter.input("1 + 1"), 0.0);
         assertEquals(1, interpreter.input("2 - 1"), 0.0);
         assertEquals(6, interpreter.input("2* 3"), 0.0);
