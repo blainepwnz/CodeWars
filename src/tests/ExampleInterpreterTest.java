@@ -1,6 +1,6 @@
 package tests;
 
-import codewars.kyu2.Interpreter;
+import codewars.kyu1.Interpreter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -39,6 +39,17 @@ public class ExampleInterpreterTest {
         assertEquals(3, interpreter.input("avg 4 2"), 0.0);
         assertFail("input: 'avg 7'", () -> interpreter.input("avg 7"));
         assertFail("input: 'avg 7 2 4'", () -> interpreter.input("avg 7 2 4"));
+    }
+
+    @Test
+    public void moreTests() {
+        Interpreter interpreter = new Interpreter();
+
+        // Functions
+        interpreter.input("fn avg x y => (x + y) / 2");
+        interpreter.input("fn echo x => x");
+        interpreter.input("avg echo 4 echo 2");
+        interpreter.input("avg echo 7 echo 2 echo 4");
     }
 
     private static void assertFail(String msg, Runnable runnable) {
